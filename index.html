@@ -1,537 +1,276 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Essential Playlist</title>
 
     <style>
-
+    /* 1. 기본 배경 및 중앙 정렬 */
     body {
         background-color: #5C94FC; /* 마리오 하늘색 */
-        background-image: url(''); /* 픽셀 구름 배경 예시 */
-        background-size: initial; /* 픽셀 아트라 너무 커지면 깨지므로 적당히 반복 */
-        image-rendering: pixelated; /* 픽셀 이미지를 선명하게 보여주는 꿀팁! */
+        background-image: url('https://user-images.githubusercontent.com/images/mario-bg-sample.png'); 
+        background-size: cover; 
+        background-attachment: fixed;
+        image-rendering: pixelated; 
         color: white;
-        text-shadow: 2px 2px 0px #000; /* 글씨에 검정 테두리 효과 (게임 폰트 느낌) */
+        text-shadow: 2px 2px 0px #000; 
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 50px 20px;
+        font-family: sans-serif;
     }
 
-#title h1 {
-    display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center;     /* 세로 중앙 정렬 */
-    width: 100%;            /* 가로를 꽉 채워야 기준점이 잡힙니다 */
-    margin-bottom: 20px;    /* 아래 자식(subtitle)과의 간격 */
-    ;
-}
+    /* 2. 로고 및 물음표 블록 레이아웃 */
+    #title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 
-#title img {
-    width: 450px; /* 이미지의 원래 비율 유지 */
-    height: auto; /* 원하는 높이로 조정 */
-}
+    #title img.logo {
+        width: 450px; 
+        height: auto; 
+    }
 
-.genre{
-    
-    background: #3cb043 !important;
-    border: 4px solid #000 !important;
-    border-radius: 0px !important;
-    padding: auto;
-    margin: 10px;
-    max-width: 350px;     /* 1. 초록색 바의 최대 길이를 350px로 제한 (원하는 대로 조절 가능) */
-    margin: 15px auto !important; /* 2. 위아래 간격은 15px 주되, 좌우 마진을 auto로 설정해 가운데 정렬! */
-    text-align: center;   /* 3. 칸이 줄어들어도 글자(K-pop 등)가 초록 칸 정중앙에 오도록 설정 */
-    cursor: pointer;
-    font-size: 1.2rem;
-}
-.main{
-   /* 1. 기본 점(•)을 깔끔하게 지워줍니다 */
-    list-style: none; 
-
-    /* 2. ❌ 기존에 들어있던 text-align: center; 가 있다면 과감히 지우거나 left로 변경! */
-    text-align: left; 
-
-    /* 4. 장르 바 크기(max-width: 350px)와 딱 맞추기 위해 가로 크기 제한 */
-    max-width: 350px;
-    margin-left: auto;  /* 5. 좌우 마진 auto로 이 상자 자체를 화면 중앙으로 보냅니다 */
-    margin-right: auto;
-   
-}
-
-.song-title {
-    margin: 10x 0;
-    
-}
-.subtitle {
-    padding: 20px; /* 내부 여백 */
-    margin: 20px; /* 외부 여백 */
-    width: 70%; /* 너비 조절 */
-    margin-left: auto; /* 좌우 중앙 정렬 */
-    margin-right: auto;
-}
-.subtitle p {
-        margin: 15px 0 5px 10px;
-        font-weight: bold;
-        color: #f7d018; /* 마리오 코인 노란색 포인트 */
-}
-  .item-box {
-        width: 100%;
-        height: 100%;
+    /* ❓ 물음표 상자 스타일 */
+    .item-box {
+        width: 80px;
+        height: 80px;
         cursor: pointer;
         margin-top: 10px;
         transition: transform 0.1s;
         image-rendering: pixelated;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
     }
+    /* 누를 때 뿅 점프하는 느낌의 효과 */
     .item-box:active {
-        transform: scale(0.9) translateY(5px);}
+        transform: translateY(-10px);
+    }
 
-    .box-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 1px;
-    margin-top: 50px;
-}
+    /* 전체 메뉴 감싸는 상자 */
+    .subtitle {
+        width: 100%;
+        max-width: 400px;     
+        margin: 0 auto;       
+    }
 
-.icon-wrapper {
-    position: relative;
-    width: 140px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    /* 3. 장르 버튼 스타일 (마리오 초록 파이프 느낌) */
+    .genre {
+        background: #3cb043 !important;
+        border: 4px solid #000 !important;
+        border-radius: 0px !important; 
+        padding: 12px 20px;
+        margin: 15px 0;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-align: center;
+        list-style: none; 
+    }
 
-.물음표박스 img,
-.마리오 img,
-.버섯 img,
-.별 img,
-.요시 img,
-.악당버섯 img {
-    width: 120px;
-    height: auto;
-    display: block;
-    cursor: pointer;
-    transition: transform 0.15s;
-    image-rendering: pixelated;
-}
+    /* 4. 노래 리스트 스타일 */
+    .song {
+        list-style: none;
+        padding-left: 0;
+        margin: 0 0 20px 0;
+        background: rgba(0, 0, 0, 0.4); 
+        border: 4px solid #000;
+        border-top: none;
+    }
 
-.물음표박스 img:hover,
-.마리오 img:hover,
-.버섯 img:hover,
-.별 img:hover,
-.요시 img:hover,
-.악당버섯 img:hover {
-    transform: translateY(-5px);
-}
+    .subtitle p {
+        margin: 15px 0 5px 10px;
+        font-weight: bold;
+        color: #f7d018; 
+    }
 
-.물음표박스 img:active,
-.마리오 img:active,
-.버섯 img:active,
-.별 img:active,
-.요시 img:active,
-.악당버섯 img:active {
-    transform: scale(0.9) translateY(5px);
-}
+    /* 5. 노래 항목 스타일 */
+    .song-item {
+        border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+    }
+    .song-item:last-child {
+        border-bottom: none;
+    }
 
-#recommend-box {
-    background: #f6d117;
-    border: 4px solid #000;
-    border-radius: 12px;
-    width: 420px;
-    margin: 40px auto;
-    padding: 20px;
-    text-align: center;
-    color: #000;
-    text-shadow: none;
-}
+    .song-item summary {
+        padding: 12px 15px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.2s;
+    }
+    .song-item summary:hover {
+        background: rgba(255, 255, 255, 0.2); 
+    }
 
-.recommend-title {
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
+    .song-content {
+        display: flex;
+        gap: 15px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.9); 
+        color: #000; 
+        text-shadow: none; 
+        align-items: center;
+    }
 
-#recommend-song {
-    color: rgb(255, 255, 255);
-    font-size: 1.1rem;
-    font-weight: bold;
-    min-height: 30px;
-    text-shadow: 2px 2px 0px #000000;
-}
+    .album-art {
+        width: 70px;
+        height: 70px;
+        background-color: #ddd; 
+        border: 3px solid #000; 
+        object-fit: cover;
+    }
 
-#coin-counter {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #f7d218;
-    color: #000;
-    padding: 10px 20px;
-    border: 4px solid #000;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-shadow: none;
-    z-index: 999;
-}
+    .lyrics {
+        font-size: 0.95rem;
+        font-style: italic;
+        line-height: 1.4;
+    }
 
-.music-links {
-    width: 500px;
-    margin: 60px auto 30px auto;
-    background: #3cb043;
-    border: 4px solid #000;
-    border-radius: 12px;
-    text-align: center;
-    padding: 20px;
-}
+    /* ------------------------------------------- */
+    /* 🌟 마법의 랜덤 하이라이트 CSS (노란색으로 반짝!) */
+    /* ------------------------------------------- */
+    .highlight {
+        background-color: #f7d018 !important; /* 마리오 코인 노란색 */
+        color: #000 !important;
+        font-weight: bold;
+        animation: blink 0.5s ease-in-out infinite alternate;
+    }
 
-.link-title {
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: white;
-}
-
-.link-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-}
-
-.music-btn {
-    background: #f7d218;
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    padding: 10px 18px;
-    border: 3px solid black;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: 0.15s;
-}
-
-.music-btn:hover {
-    transform: translateY(-4px);
-}
-.music-btn:active {
-    transform: scale(0.95);
-}
-
+    @keyframes blink {
+        from { box-shadow: 0 0 5px #f7d018; }
+        to { box-shadow: 0 0 20px #ffea75, inset 0 0 10px #ffea75; }
+    }
 </style>
 </head>
 <body>
   
-
-<div id="coin-counter">
-    🪙 x 0
-</div>
-
     <div id="title">
-        <h1><img src="Gemini_Generated_Image_valk94valk94valk.png" alt="로고" height="100"></h1>
-    </div>
-
-   
-<div class="main">
-<details>
-  <summary class="genre">K-pop</summary>
-
-  
-  <p>──boy group──</p>
-
-  <ul class="song">
-    <li class="song-title kpop">ENHYPEN - No Doubt</li>
-    <li class="song-title kpop">NCT DREAM - Beat It Up</li>
-    <li class="song-title kpop">NCT DREAM - CHILLER</li>
-    <li class="song-title kpop">MARK - +82 Pressin'</li>
-    <li class="song-title kpop">CORTIS - REDRED</li>
-    <li class="song-title kpop">EXO - Love Me Right</li>
-    <li class="song-title kpop">EXO - Cream Soda</li>
-    <li class="song-title kpop">NCT WISH - poppop</li>
-    <li class="song-title kpop">보이넥스트도어 - 똑똑똑</li>
-    <li class="song-title kpop">RIIZE - FLy Up</li>
-  </ul>  
-
-  <p>──girl group──</p>
-
-  <ul class="song">
-    <li class="song-title kpop">BABYMONSTER - DRIP</li>
-    <li class="song-title kpop">BLACKPINK - 뛰어</li>
-    <li class="song-title kpop">aespa - Dirty Work</li>
-    <li class="song-title kpop">Rescene - Deja Vu</li>
-    <li class="song-title kpop">키키 - 404</li>
-    <li class="song-title kpop">BABYMONSTER - 춤</li>
-    <li class="song-title kpop">아일릿 - It's Me</li>
-    <li class="song-title kpop">Hearts2Hearts - Focus</li>
-
-  </ul>
-
-</details>  
-</div>
-
-<div class="main">
-<details>
- <summary class="genre">Indie</summary>
-
-  <ul class="song">
-
-    <li class="song-title indie">소수빈 - 언젠가는 마주치게 되는 것들</li>
-    <li class="song-title indie">적재 - 발자국</li>
-    <li class="song-title indie">신승훈 - 나비효과</li>
-    <li class="song-title indie">임지우&Kim Do Young - 위로</li>
-    <li class="song-title indie">잔나비 - 꿈과 책과 힘과 벽</li>
-    <li class="song-title indie">정승환 - 십이월 이십오일의 고백</li>
-    <li class="song-title indie">정키 - Baby</li>
-    <li class="song-title indie">소수빈 - 가잖아</li>
-    <li class="song-title indie">소수빈 - every!</li>
-    <li class="song-title indie">홍이삭 - 그 밤을 내게 줘요</li>
-    <li class="song-title indie">rudbeckia - 목성</li>
-    <li class="song-title indie">홍이삭 - 잠</li>
-    <li class="song-title indie">홍이삭 - Let's Be Friends</li>
-    <li class="song-title indie">하현상 - 화분</li>
-    <li class="song-title indie">하현상 - Koh Samed</li>
-    <li class="song-title indie">적재 - By Your Side</li>
-    <li class="song-title indie">거니 - 기대</li>
-    <li class="song-title indie">곽진언 - 일종의 고백</li>
-  </ul>
-
-</details>
-</div>
-
-<div class="main">
-<details>
-
-  <summary class="genre">Band</summary>
-
-  <ul class="song">
-    <li class="song-title band">데이식스 - Shoot Me</li>
-    <li class="song-title band">봉제인간 - GAEKKUM</li>
-    <li class="song-title band">터치드 - Last Day</li>
-    <li class="song-title band">실리카겔 - Desrt Eagle</li>
-    <li class="song-title band">쏜애플 - 서울</li>
-  </ul>
-
-</details>
-</div>
-
-<div class="main">
-<details>
-    <summary class="genre">Hip-hop</summary>
-    
-    <ul class="song">
-        <li class="song-title hip-hop">HIGHER MUSIC - FASHO</li>
-        <li class="song-title hip-hop">식케이 & 릴 모쉬핏 - LOV3</li>
-        <li class="song-title hip-hop">pH-1 - PACKITUP!</li>
-        <li class="song-title hip-hop">pH-1 - Cupid</li>
-        <li class="song-title hip-hop">pH-1 - Dvd</li>
-        <li class="song-title hip-hop">pH-1 - Diffrent Summer</li>
-        <li class="song-title hip-hop">빈지노 - Aqua Man</li>
-        <li class="song-title hip-hop">우원재 - 시차</li>
-    </ul>
-</details>
-</div>
-
-<div class="main">
-<details>
-    <summary class="genre">Ballade</summary>
-    
-    <ul class="song">
-        <li class="song-title ballade">권진아 - 운이 좋았지</li>
-        <li class="song-title ballade">마크툽 - 오늘도 빛나는 너에게</li>
-        <li class="song-title ballade">린 - ...사랑했잖아...</li>
-        <li class="song-title ballade">로이킴 - 그때 헤어지면 돼</li>
-        <li class="song-title ballade">테이 - 끝사랑</li>
-        <li class="song-title ballade">도겸X승관 - Blue</li>
-        <li class="song-title ballade">정승환 - 눈사람</li>
-    </ul>
-</details>
-</div>
-
-<div id="recommend-box">
-    <div id="recommend-song">
-            ⭐ 캐릭터를 눌러 추천곡을 받아보세요! ⭐
-    </div>
-</div>
-
-<div class="box-container">
-
-    <!-- 전체 랜덤 -->
-    <div class="icon-wrapper">
-
-        <div class="물음표박스"
-             onclick="popRandomSong('all')">
-
-            <img src="ChatGPT Image 2026년 5월 20일 오전 11_23_10.png"
-                 alt="물음표박스">
-
-                 <p class="icon-text">
-                    RANDOM
-                 </p>
-        </div>
-    </div>
-
-    <!-- K-pop 랜덤 -->
-    <div class="icon-wrapper">
-
-        <div class="마리오"
-             onclick="popRandomSong('kpop')">
-
-            <img src="Gemini_Generated_Image_qzay1xqzay1xqzay.png"
-                 alt="마리오">
-                    <p class="icon-text">
-                        K-POP
-                    </p>
-        </div>
-    </div>
-   
-    <div class="icon-wrapper">
-        <div class="버섯"
-             onclick="popRandomSong('indie')">
-        <img src="Gemini_Generated_Image_nirn0xnirn0xnirn.png" alt="버섯">
+        <img src="Gemini_Generated_Image_valk94valk94valk.png" alt="로고" class="logo">
         
-
-            <p class="icon-text">
-                INDIE
-            </p> 
-            </div>   
+        <img src="https://only-toons.com/wp-content/uploads/2024/04/super-mario-lucky-block.png" alt="물음표블록" class="item-box" onclick="pickRandomSong()">
     </div>
 
-    <div class="icon-wrapper">
-        <div class="별"
-             onclick="popRandomSong('band')">
-            <img src="Gemini_Generated_Image_e8bmd9e8bmd9e8bm.png" alt="별">
-            <p class="icon-text">
-                BAND
-            </p>
-        </div>
+    <div class="subtitle">
+
+        <details>
+            <summary class="genre">K-pop</summary>
+            
+            <p>── boy group ──</p>
+            <ul class="song">
+                <li class="song-item">
+                    <details>
+                        <summary class="song-title">ENHYPEN - No Doubt</summary>
+                        <div class="song-content">
+                            <img src="https://via.placeholder.com/70" alt="No Doubt" class="album-art">
+                            <div class="lyrics">"No doubt, 멈출 수 없는 이 느낌..."</div>
+                        </div>
+                    </details>
+                </li>
+                <li class="song-item">
+                    <details>
+                        <summary class="song-title">NCT DREAM - Beat It Up</summary>
+                        <div class="song-content">
+                            <img src="https://via.placeholder.com/70" alt="Beat It Up" class="album-art">
+                            <div class="lyrics">"거침없이 비트를 쪼개, Beat it up!"</div>
+                        </div>
+                    </details>
+                </li>
+                <li class="song-item"><details><summary class="song-title">NCT DREAM - CHILLER</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+                <li class="song-item"><details><summary class="song-title">MARK - +82 Pressin'</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+            </ul>   
+            
+            <p>── girl group ──</p>
+            <ul class="song">
+                <li class="song-item">
+                    <details>
+                        <summary class="song-title">BABYMONSTER - DRIP</summary>
+                        <div class="song-content">
+                            <img src="https://via.placeholder.com/70" alt="DRIP" class="album-art">
+                            <div class="lyrics">"Look at the drip, 모두 내게 시선 고정!"</div>
+                        </div>
+                    </details>
+                </li>
+                <li class="song-item"><details><summary class="song-title">BLACKPINK - 뛰어</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+                <li class="song-item"><details><summary class="song-title">aespa - Dirty Work</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+                <li class="song-item"><details><summary class="song-title">Rescene - Deja Vu</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+            </ul>
+        </details>  
+
+        <details>
+            <summary class="genre">Indie</summary>
+            <ul class="song">
+                <li class="song-item">
+                    <details>
+                        <summary class="song-title">소수빈 - 언젠가는 마주치게 되는 것들</summary>
+                        <div class="song-content">
+                            <img src="https://via.placeholder.com/70" class="album-art">
+                            <div class="lyrics">"언젠가 우리 마주치게 된다면..."</div>
+                        </div>
+                    </details>
+                </li>
+                <li class="song-item"><details><summary class="song-title">적재 - 발자국</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+                <li class="song-item"><details><summary class="song-title">신승훈 - 나비효과</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+                <li class="song-item"><details><summary class="song-title">임지우&Kim Do Young - 위로</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+                <li class="song-item"><details><summary class="song-title">잔나비 - 꿈과 책과 힘과 벽</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+                <li class="song-item"><details><summary class="song-title">정승환 - 십이월 이십오일의 고백</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+                <li class="song-item"><details><summary class="song-title">정키 - Baby</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+            </ul>
+        </details>
+
+        <details>
+            <summary class="genre">Band</summary>
+            <ul class="song">
+                <li class="song-item">
+                    <details>
+                        <summary class="song-title">에픽하이 - 빛나는 밤</summary>
+                        <div class="song-content">
+                            <img src="https://via.placeholder.com/70" class="album-art">
+                            <div class="lyrics">"별들이 가득한 빛나는 밤에..."</div>
+                        </div>
+                    </details>
+                </li>
+                <li class="song-item"><details><summary class="song-title">씨스타 - 사랑은 비가 되어</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+                <li class="song-item"><details><summary class="song-title">아이유 - Flower</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+                <li class="song-item"><details><summary class="song-title">정승환 - 십이월 이십오일의 고백</summary><div class="song-content"><img src="https://via.placeholder.com/70" class="album-art"><div class="lyrics">"가사"</div></div></details></li>
+            </ul>
+        </details>
+
     </div>
 
-    <div class="icon-wrapper">
-        <div class="요시"
-             onclick="popRandomSong('hip-hop')">
-            <img src="Gemini_Generated_Image_fx7v48fx7v48fx7v.png" alt="요시">
-            <p class="icon-text">
-                HIP-HOP
-            </p>
-        </div>
-    </div>
+    /* 🔮 랜덤 선택을 제어하는 자바스크립트 코드 */
+    <script>
+        function pickRandomSong() {
+            // 1. 기존에 하이라이트가 들어가 있던 노래가 있다면 초기화(제거)합니다.
+            const previousHighlight = document.querySelector('.highlight');
+            if (previousHighlight) {
+                previousHighlight.classList.remove('highlight');
+            }
 
-   <div class="icon-wrapper">
-         <div class="악당버섯"
-             onclick="popRandomSong('ballade')">
-        <img src="Gemini_Generated_Image_jup6rbjup6rbjup6.png" alt="악당버섯">
-        <p class="icon-text">
-            BALLADE
-        </p>
-    </div>
+            // 2. 화면에 있는 모든 노래 제목 요소를 싹 긁어모읍니다.
+            const songs = document.querySelectorAll('.song-title');
+            
+            // 3. 노래 개수 안에서 무작위 숫자(인덱스)를 하나 뽑습니다.
+            const randomIndex = Math.floor(Math.random() * songs.length);
+            const selectedSong = songs[randomIndex];
 
-</div>
+            // 4. 선택된 노래 제목에 반짝이는 하이라이트 효과 스타일을 추가합니다.
+            selectedSong.classList.add('highlight');
 
-</div>
+            // 5. (유익한 보너스!) 선택된 노래가 들어있는 장르 주머니와 노래 세부창을 자동으로 촤락 열어줍니다.
+            // 부모의 부모 태그들을 찾아서 'open' 상태로 만듭니다.
+            let parentDetails = selectedSong.closest('details');
+            while (parentDetails) {
+                parentDetails.open = true;
+                parentDetails = parentDetails.parentElement.closest('details');
+            }
 
-
-
-<div class="music-links">
-
-    <div class="link-title">
-        🎵 LISTEN NOW 🎵
-    </div>
-
-    <div class="link-buttons">
-
-        <a href="https://open.spotify.com"
-           target="_blank"
-           class="music-btn">
-            🎧 Spotify
-        </a>
-
-        <a href="https://www.melon.com"
-           target="_blank"
-           class="music-btn">
-            🍈 Melon
-        </a>
-
-        <a href="https://music.youtube.com"
-           target="_blank"
-           class="music-btn">
-            ▶️ YouTube Music
-        </a>
-
-        <a href="https://music.apple.com"
-           target="_blank"
-           class="music-btn">
-            🍎 Apple Music
-        </a>
-
-    </div>
-
-</div>
-
-
-    
-</div>
-</div> 
-
-
-
-</div>
-
-<script>
-let coin = 0;
-
-function popRandomSong(type) {
-
-    let songs;
-
-    // 버튼 종류에 따라 범위 변경
-    if (type === 'all') {
-        songs = document.querySelectorAll('.song-title');
-    }
-
-    else if (type === 'kpop') {
-        songs = document.querySelectorAll('.kpop');
-    }
-
-    else if (type === 'indie') {
-        songs = document.querySelectorAll('.indie');
-    }
-
-    else if (type === 'band') {
-        songs = document.querySelectorAll('.band');
-    }
-
-    else if (type === 'hip-hop') {
-        songs = document.querySelectorAll('.hip-hop');
-    }
-
-        else if (type === 'ballade') {
-            songs = document.querySelectorAll('.ballade');
+            // 6. 하이라이트된 노래가 있는 위치로 화면을 부드럽게 이동시켜 줍니다.
+            selectedSong.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-
-    else {
-        songs = document.querySelectorAll('.song-title');
-    }
-
-    // 노래 없을 경우
-    if (songs.length === 0) {
-        return;
-    }
-
-    // 랜덤 선택
-    const randomIndex = Math.floor(Math.random() * songs.length);
-
-    const randomSongTitle =
-        songs[randomIndex].textContent.trim();
-    const recommendSong =
-    document.getElementById('recommend-song');
-    recommendSong.innerText =
-    "⭐ " + randomSongTitle;
-    coin++;
-    document.getElementById('coin-counter').innerText =
-    "🪙 x " + coin;
-}
-</script>
-
+    </script>
 </body>
-
 </html>
